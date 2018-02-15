@@ -10,5 +10,3 @@ $ kotlinc main.kt server -include-runtime -d main.jar
 ```shell
 $ java -jar main.jar
 ```
-
-> Note: this is very initial implementation, currently it reads the request and then closes/rejects the request in your browser or other client
