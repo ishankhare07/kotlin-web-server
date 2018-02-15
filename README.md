@@ -4,7 +4,7 @@ a simple http server in kotlin
 #### To run
 1. compile with
 ```shell
-$ kotlinc main.kt -include-runtime -d main.jar
+$ kotlinc main.kt server -include-runtime -d main.jar
 ```
 2. then run
 ```shell

@@ -3,6 +3,9 @@ package server
 import java.net.Socket
 import server.HttpRequest
 
+// just for testing purpose
+import server.HttpResponse
+
 class ConnectionHandler: Runnable {
 	var conn: Socket
 	var requestData: String
@@ -34,10 +37,13 @@ class ConnectionHandler: Runnable {
 
 	override fun run() {
 		var request = this.getRequestObject()
-		println(request)
-		println(request.type)
-		println(request.url)
-		println(request.headers)
+		print(request)
+		print("\t")
+		//println(request.headers)
+
+		var response = HttpResponse("Hello world", 200)
+		println(response)
+		this.conn.getOutputStream().write(response.toByteArray())
 		this.conn.close()
 	}
 }
