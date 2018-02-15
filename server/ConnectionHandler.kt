@@ -7,43 +7,43 @@ import server.HttpRequest
 import server.HttpResponse
 
 class ConnectionHandler: Runnable {
-	var conn: Socket
-	var requestData: String
-	var t: Thread
+    var conn: Socket
+    var requestData: String
+    var t: Thread
 
-	constructor(conn: Socket) {
-		this.conn = conn
-		this.requestData = String()
-		this.t = Thread(this, conn.toString())
-		this.t.start()
-	}
+    constructor(conn: Socket) {
+        this.conn = conn
+        this.requestData = String()
+        this.t = Thread(this, conn.toString())
+        this.t.start()
+    }
 
-	fun readRequestData() {
-		var b = ByteArray(1024)
-		var inps = this.conn.getInputStream()
-		inps.read(b, 0, inps.available())
+    fun readRequestData() {
+        var b = ByteArray(1024)
+        var inps = this.conn.getInputStream()
+        inps.read(b, 0, inps.available())
 
-		this.requestData = String(b).trim()
-	}
+        this.requestData = String(b).trim()
+    }
 
-	fun getRequestObject(): HttpRequest {
-		if(this.requestData.isEmpty()) {
-			this.readRequestData()
-		}
-		var req = HttpRequest(this.requestData)
-		req.parseRequestData()
-		return req
-	}
+    fun getRequestObject(): HttpRequest {
+        if(this.requestData.isEmpty()) {
+            this.readRequestData()
+        }
+        var req = HttpRequest(this.requestData)
+        req.parseRequestData()
+        return req
+    }
 
-	override fun run() {
-		var request = this.getRequestObject()
-		print(request)
-		print("\t")
-		//println(request.headers)
+    override fun run() {
+        var request = this.getRequestObject()
+        print(request)
+        print("\t")
+        //println(request.headers)
 
-		var response = HttpResponse("Hello world", 200)
-		println(response)
-		this.conn.getOutputStream().write(response.toByteArray())
-		this.conn.close()
-	}
+        var response = HttpResponse("Hello world", 200)
+        println(response)
+        this.conn.getOutputStream().write(response.toByteArray())
+        this.conn.close()
+    }
 }
