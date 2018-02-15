@@ -1,11 +1,10 @@
 import java.net.ServerSocket
-import server.*
+import server.ConnectionHandler
 
 fun main(args: Array<String>) {
+	var socket = ServerSocket(5000)
+	println("listening for connections on http://0.0.0.0:5000")
 	while(true) {
-		var socket = ServerSocket(5000)
-
-		println("listening for connections on http://0.0.0.0:5000")
 		ConnectionHandler(socket.accept())
 	}
 }

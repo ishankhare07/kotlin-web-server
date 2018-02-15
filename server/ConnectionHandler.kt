@@ -38,5 +38,6 @@ class ConnectionHandler: Runnable {
 		println(request.type)
 		println(request.url)
 		println(request.headers)
+		this.conn.close()
 	}
 }
