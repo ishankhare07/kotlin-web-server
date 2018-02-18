@@ -43,17 +43,7 @@ class ConnectionHandler: Runnable {
         print(request)
         print("\t")
 
-        try {
-            this.routes.match(request.url)
-        } catch (ex: Exception) {
-            var err_response = HttpResponse("Not Found!", 404)
-            println(err_response)
-            this.conn.getOutputStream().write(err_response.toByteArray())
-            this.conn.close()
-            return
-        }
-
-        var response = HttpResponse("Hello world", 200)
+        var response = this.routes.match(request)
         println(response)
         this.conn.getOutputStream().write(response.toByteArray())
         this.conn.close()
