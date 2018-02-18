@@ -1,24 +1,26 @@
 package server
 
 import java.util.regex.Pattern
+import server.ApiView
+import server.HttpResponse
+import server.HttpRequest
 
 class Router {
-    var mappings = HashMap<Pattern, String>() 
+    var mappings = HashMap<Pattern, ApiView>() 
 
-    fun register(route: String, some_string: String) {
-        this.mappings.put(Pattern.compile(route), some_string)
+    fun register(route: String, view: ApiView) {
+        this.mappings.put(Pattern.compile(route), view)
     }
 
-    fun match(url: String) {
+    fun match(request: HttpRequest): HttpResponse {
         for (route in this.mappings.keys) {
-            var m = route.matcher(url)
+            var m = route.matcher(request.url)
             if(m.find()) {
-                println("pattern matched => ${route}")
-                println("mapping to => ${this.mappings.get(route)}")
-                return
+                var view = this.mappings.get(route)
+                return view?.dispatch(request) ?: HttpResponse("Server Error", 500)
             }
         }
 
-        throw Exception("No matching route found! => ${url}")
+        return HttpResponse("Not found!", 404)
     }
 }
