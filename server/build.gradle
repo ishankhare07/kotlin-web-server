@@ -1,19 +1,23 @@
 buildscript {
     ext.kotlin_version = '1.2.21'
 
-    repositories {
-	    jcenter()
-    	mavenCentral()
-    }
 
     dependencies {
 	classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-	classpath "org.jetbrains.kotlin:kotlin-stdlib"
     }
 }
 
 plugins {
     id "org.jetbrains.kotlin.jvm" version "1.2.21"
+}
+
+repositories {
+	jcenter()
+	mavenCentral()
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib"
 }
 
 sourceSets {
