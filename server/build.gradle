@@ -1,0 +1,26 @@
+buildscript {
+    ext.kotlin_version = '1.2.21'
+
+
+    dependencies {
+	classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+plugins {
+    id "org.jetbrains.kotlin.jvm" version "1.2.21"
+}
+
+repositories {
+	jcenter()
+	mavenCentral()
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib"
+}
+
+sourceSets {
+    main.kotlin.srcDirs += "./"
+}
+
