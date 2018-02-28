@@ -17,9 +17,9 @@ fun main(args: Array<String>) {
     println("listening for connections on http://0.0.0.0:5000")
 
     var routes = Router()
-    routes.register("^\\/$", MyView())
-    routes.register("^\\/api\\/users\\/$", MyView())
-    routes.register("^\\/api\\/users\\/\\d+\\/$", MyView())
+    routes.register("^/$", MyView())
+    routes.register("^/api/users/$", MyView())
+    routes.register("^/api/users/\\d+/$", MyView())
 
     while(true) {
         ConnectionHandler(socket.accept(), routes)
