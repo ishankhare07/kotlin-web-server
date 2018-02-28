@@ -9,6 +9,8 @@ buildscript {
 
 plugins {
     id "org.jetbrains.kotlin.jvm" version "1.2.21"
+    id "com.jfrog.bintray" version "1.7.3"
+    id 'maven-publish'
 }
 
 repositories {
@@ -19,6 +21,43 @@ repositories {
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib"
 }
+
+jar {
+	from {
+		configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+	}
+}
+
+task sourcesJar(type: Jar, dependsOn: project.classes) {
+	from sourceSets.main.allSource
+}
+
+publishing {
+	publications {
+		publishToBintray(MavenPublication) {
+			artifact sourcesJar
+			groupId 'com.ishankhare.kotlin-server'
+		}
+	}
+}
+
+bintray {
+	user = 'ishankhare07'
+	key = '9b693a0c46f7021021a2422f3ea837f0ad8e3ea6'
+        publications = ['publishToBintray']
+	pkg {
+		version {
+			name = 'v0.0.1'
+		}
+		repo = 'server'
+		name = 'server'
+		licenses = ['MIT']
+		vcsUrl = 'https://github.com/ishankhare07/kotlin-web-server'
+	}
+	
+}
+
+
 
 sourceSets {
     main.kotlin.srcDirs += "./"
